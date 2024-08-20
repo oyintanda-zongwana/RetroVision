@@ -5,7 +5,6 @@ import {getUsers, getUser, insertUser, deleteUser, updateUser, loginUser} from '
 const userRouter = express.Router()
 
 userRouter.post('/login', loginUser)
-//  checkUser,
 userRouter.get('/', getUsers)
 
 userRouter.post('/insert', insertUser)
