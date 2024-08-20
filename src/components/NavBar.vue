@@ -62,7 +62,7 @@
     color: black; 
 }
 .container-fluid {
-    background-color: #f6e1c7; 
+    background-color: #ecd4b6; 
 }
 
     
