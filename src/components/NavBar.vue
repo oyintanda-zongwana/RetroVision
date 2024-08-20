@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">
-                <img src="https://codjoelmayer.github.io/projectImages/images/logo.png" loading="lazy" alt="logo">
+                <img src="https://jefthanizaam01.github.io/favoriteimages/images/retrovisionlogo.png" loading="lazy" alt="logo">
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -36,3 +36,34 @@
         </div>
     </nav>
 </template>
+
+<style scoped>
+.navbar {
+   margin: 0;
+   padding: 0; 
+}
+
+.nav-link {
+    color: #c78939;
+    font-weight: bold;
+    font-family: serif;
+    font-size: 19px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: blue; 
+}
+
+.navbar-nav .nav-link:visited {
+    color: #d2994e; 
+}
+
+.navbar-nav .nav-link:active {
+    color: black; 
+}
+.container-fluid {
+    background-color: #f6e1c7; 
+}
+
+    
+</style>
