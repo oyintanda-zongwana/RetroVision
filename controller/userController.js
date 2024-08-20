@@ -40,7 +40,7 @@ let updateUser = async(req, res) => {
 }
 
 let loginUser = (req, res) => {
-    res.send({message:"you have signed in successfully"})
+    res.send({message:"you have logged in"})
 }
 
 export {getUsers, getUser, insertUser, deleteUser, updateUser, loginUser}
