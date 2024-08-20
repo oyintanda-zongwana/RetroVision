@@ -6,19 +6,6 @@
     box-sizing: border-box;
 }
 
-/* Custom variables */
-:root {
-    --primary: rgb(0, 0, 0);
-    --secondary: white;
-    --alternative: hsla(100, 13%, 28%, 0.7);
-    --awesome: darkolivegreen;
-    --mainBox-shadow: 0.2rem 0.2rem 0.1rem 0.2rem rgba(105, 96, 96, 0.75);
-    --button-shadow: 0.1rem 0.1rem rgba(105, 96, 96, 0.75);
-    --card-box-shadow: 0.5vw 0.5vw 1vw rgba(90, 115, 132, 0.9);
-    --text-shadow: 0.3rem 0.3rem 0.4rem rgba(78, 107, 91, 0.5);
-    --mainBg: hsla(145, 83%, 20%, 0.39);
-    --bgImg: linear-gradient(to right, var(--awesome), var(--mainBg));
-}
 
 ::-webkit-scrollbar {
     display: none;
