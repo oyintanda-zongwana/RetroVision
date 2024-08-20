@@ -46,8 +46,8 @@
 .nav-link {
     color: #c78939;
     font-weight: bold;
-    font-family: serif;
-    font-size: 19px;
+    font-family: 'Retro Cool', sans-serif;
+    font-size: 20px;
 }
 
 .navbar-nav .nav-link:hover {
@@ -55,14 +55,14 @@
 }
 
 .navbar-nav .nav-link:visited {
-    color: #d2994e; 
+    color: #c43d26; 
 }
 
 .navbar-nav .nav-link:active {
-    color: black; 
+    color: rgb(129, 116, 116); 
 }
 .container-fluid {
-    background-color: #ecd4b6; 
+    background-color: #111547; 
 }
 
     
