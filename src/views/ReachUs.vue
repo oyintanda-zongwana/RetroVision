@@ -1,65 +1,62 @@
 <template>
-    <main class="container-fluid">
+    <main class="container-fluid retro-background">
       <section class="container" id="contactinfo">
         <div class="row">
-          <h2 id="contactz" class="display-3">Reach Us</h2>
+          <h2 id="contactz" class="display-3 retro-heading">Reach Us</h2>
         </div>
         <div class="col">
-          <div class="card-Contact">
+          <div class="card retro-card">
             <div class="card-body text-black">
-              <p>
-                <i class="bi bi-telephone-forward-fill"></i> Phone: 084-734-9535
+              <p class="retro-text">
+                <i class="bi bi-telephone-forward-fill retro-icon"></i> Phone: 084-734-9535
               </p>
-              <p>
-                <i class="bi bi-envelope"></i> Email:
-                RetroVision@gmail.com
+              <p class="retro-text">
+                <i class="bi bi-envelope retro-icon"></i> Email: RetroVision@gmail.com
               </p>
-              <p>
-                <i class="fa-sharp fa-solid fa-location-dot"></i> Address:
-                Cape Town, South Africa
+              <p class="retro-text">
+                <i class="fa-sharp fa-solid fa-location-dot retro-icon"></i> Address: Cape Town, South Africa
               </p>
-              <p>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-twitter"></i>
+              <p class="retro-text">
+                <i class="fa-brands fa-instagram retro-icon"></i>
+                <i class="fa-brands fa-facebook retro-icon"></i>
+                <i class="fa-brands fa-twitter retro-icon"></i>
               </p>
               <form action="https://formspree.io/f/mleqqlvy" method="POST">
-                <h2>How can we help you?</h2>
+                <h2 class="retro-form-heading">How can we help you?</h2>
                 <div class="mb-3">
-                  <label for="exampleInputName" class="form-label">Name</label>
+                  <label for="exampleInputName" class="form-label retro-label">Name</label>
                   <input
                     name="name"
                     type="name"
-                    class="form-control"
+                    class="form-control retro-input"
                     id="exampleInputName"
                     aria-describedby="nameHelp"
                     required
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <label for="exampleInputEmail1" class="form-label retro-label">Email address</label>
                   <input
                     name="email"
                     type="email"
-                    class="form-control"
+                    class="form-control retro-input"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     required
                   />
                 </div>
                 <div class="mb-3">
-                  <label id="message" class="form-label">Message</label>
+                  <label id="message" class="form-label retro-label">Message</label>
                   <textarea
                     name="message"
-                    type="text"
-                    class="form-control message"
+                    class="form-control retro-textarea"
                     id="exampleInputPassword1"
                     required
                   ></textarea>
                 </div>
-                <div class="last-button">
-                  <button id="sub" type="submit" class="btn">Submit</button>
-                  <button id="clearer" type="reset" class="btn">Clear</button>
+                <div class="button-group">
+                  <button id="sub" type="submit" class="btn retro-button">Submit</button>
+                  <button id="clearer" type="reset" class="btn retro-button">Clear</button>
                 </div>
               </form>
             </div>
@@ -76,75 +73,77 @@
   </script>
   
   <style scoped>
-  .bg-image {
-      margin-top: -100px;
+  .retro-background {
+    background-image: url('https://jefthanizaam01.github.io/favoriteimages/images/reachmebackground.jpg');
+    background-color: #f9d5a3;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
   }
   
-  /* Product background */
-  .product-background {
-      background-color: var(--square);
+  .retro-heading {
+    font-family: 'Press Start 2P', cursive;
+    color: #ff0044;
+    text-shadow: 0 0 10px #ff0044, 0 0 20px #ff0044;
   }
   
-  /* Card for products */
-  .card {
-      width: 100%;
+  .retro-card {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #00aaff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.7);
   }
   
-  #productz {
-      background-color: #f3ddc1;
+  .retro-text {
+    color: #fff;
+    text-shadow: 0 0 5px #ff0044, 0 0 10px #ff0044, 0 0 15px #ff0044;
+    margin-bottom: 1rem;
   }
   
-  /* Checkout Page */
-  .table img {
-      max-width: 100px;
-      height: 140px;
+  .retro-icon {
+    color: #00aaff;
+    margin-right: 10px;
   }
   
-  .table .total-row td {
-      font-weight: bold;
-      text-align: right;
-      border: 1px solid #dee2e6;
-      padding: 8px;
+  .retro-form-heading {
+    font-family: 'Press Start 2P', cursive;
+    color: #00aaff;
+    text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
   }
   
-  .table th,
-  .table td {
-      border: 1px solid #dee2e6; 
-      padding: 8px; 
+  .retro-label {
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
   }
   
-  .remove-btn {
-      background-color: #46504d; 
-      color: white;
-      font-size: 16px;
-      border: none; 
-      border-radius: 5px; 
-      padding: 5px 10px; 
-      cursor: pointer; 
+  .retro-input, .retro-textarea {
+    border: 2px solid #00aaff;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
   }
   
-  #productTable {
-      width: 100%;
-      border-collapse: collapse; 
-      background-color: white;
-      color: black;
+  .retro-button {
+    background-color: #ff0044;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 0 10px #ff0044;
+    margin: 0 10px;
   }
   
-  #productTable, #productTable th, #productTable td {
-      border: 1px solid black; 
+  .retro-button:hover {
+    background-color: #e60039;
+    box-shadow: 0 0 15px #e60039;
   }
   
-  #productTable th, #productTable td {
-      padding: 8px; 
-      text-align: left; 
-  }
-  
-  #sub, #clearer {
-      background-color: burlywood;
-  }
-  
-  #contactinfo {
-      text-align: center;
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
   }
   </style>
   
