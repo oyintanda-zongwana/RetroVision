@@ -1,5 +1,4 @@
 import {getProductsDB, getProductDB, insertProductDB, deleteProductDB, updateProductDB} from '../model/productsDB.js'
-// import {hash} from 'bcrypt'
 
 let getProducts = async(req, res) => {
     res.json(await getProductsDB());

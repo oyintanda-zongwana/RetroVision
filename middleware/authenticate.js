@@ -34,4 +34,4 @@ const checkUser = async(req, res, next) => {
 //     next();
 // }
 
-export {checkUser, verifyAToken}
+// export {checkUser, verifyAToken}
