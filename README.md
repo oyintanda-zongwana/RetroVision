@@ -1,4 +1,4 @@
-# retrovision
+# eshop
 
 ## Project setup
 ```
