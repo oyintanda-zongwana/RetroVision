@@ -32,16 +32,6 @@ const routes = [
     component: () => import('@/views/ReachUs.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/LoginView.vue')
-  },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: () => import('@/views/LoginView.vue')
-  },
-  {
     path: '/signup',
     name: 'signup',
     component: () => import('@/views/SignUp.vue')
