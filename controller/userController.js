@@ -1,5 +1,5 @@
 import {getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB} from '../model/usersDB.js'
-// import {hash} from 'bcrypt'
+import {hash} from 'bcrypt'
 
 let getUsers = async(req, res) => {
     res.json(await getUsersDB());
@@ -11,7 +11,8 @@ let getUser = async(req, res) => {
 
 let insertUser = async (req, res) => {    
     let {name, surname, age, gender, role, email, password, profile} = req.body
-    await insertUserDB(name, surname, age, gender, role, email, password, profile)
+    let hashedP = await hash(password, 10)
+    // await insertUserDB(name, surname, age, gender, role, email, hashedP, profile)
     res.send('data was inserted into successfully')
 }   
 
@@ -38,4 +39,10 @@ let updateUser = async(req, res) => {
     res.send('data has been updated successfully')
 }
 
-export {getUsers, getUser, insertUser, deleteUser, updateUser}
+let loginUser = (req, res) => {
+    res.send({
+        message:"you have signed in successfully", 
+        token:req.body.token})
+}
+
+export {getUsers, getUser, insertUser, deleteUser, updateUser, loginUser}
