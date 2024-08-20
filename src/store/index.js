@@ -134,37 +134,6 @@ export default createStore({
         })
       }
     },
-    // ===== LOGIN =======
-    async login(context, payload) {
-      try {
-        console.log(payload);
-        const { msg, result, token } = await (await axios.post(`${apiURL}user/login`, payload)).data
-
-        if (result) {
-          toast.success(`${msg}😎`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          context.commit('setUser', {
-            msg,
-            result
-          })
-          cookies.set('LegitUser', { token, msg, result })
-          applyToken(token)
-          router.push({ name: 'products' })
-        } else {
-          toast.error(`${msg}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-        }
-      } catch (e) {
-        toast.error(`${e.message}`, {
-          autoClose: 2000,
-          position: toast.POSITION.BOTTOM_CENTER
-        })
-      }
-    },
 
     // ==== Product =====
     async fetchProducts(context) {
