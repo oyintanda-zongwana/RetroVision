@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <p class="lead">
-                RV &copy; <span id="currYear"></span>
+                RetroVision &copy; <span id="currYear">2024</span>
             </p>
         </div>
     </div>
