@@ -9,7 +9,7 @@ const checkUser = async(req, res, next) => {
     let hashedPassword = (await getUserDB(profile)).password
     let result =  await compare(password,hashedPassword)
         if(result == true) {
-            let token = jwk.sign({username:profile}, process.env.SECRET ,{expiresIn:'3h'});
+            let token = jwk.sign({username:profile}, process.env.SECRET_KEY ,{expiresIn:'3h'});
             console.log(token);
             req.body.token = token;
             next();
