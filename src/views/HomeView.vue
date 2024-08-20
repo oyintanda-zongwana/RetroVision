@@ -82,7 +82,7 @@ export default {
   font-size: 1.5rem;
   color: #d2994e; /* Gray color for the slogan */
   text-shadow: 1px 1px #ddd; /* Slight shadow for emphasis */
-  font-family: 'VT323', monospace; /* Gamer-style font */
+  font-family: 'VT323', monospace; 
   animation: slideInFromLeft 1.5s ease-out;
 }
 

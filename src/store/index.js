@@ -6,7 +6,7 @@ import router from '@/router'
 import { applyToken } from '@/service/AuthenticatedUser.js'
 import { useCookies } from 'vue3-cookies'
 const { cookies } = useCookies()
-const apiURL = 'https://eshop-8x2p.onrender.com/'
+const apiURL = 'https://retrovision-2.onrender.com/'
 // Should you reload the page after logging in
 applyToken(cookies.get('LegitUser')?.token)
 export default createStore({
@@ -41,7 +41,7 @@ export default createStore({
     // ==== User ========
     async fetchUsers(context) {
       try {
-        const { results, msg } = await (await axios.get(`${apiURL}user`)).data
+        const { results, msg } = await (await axios.get(`${apiURL}users`)).data
         if (results) {
           context.commit('setUsers', results)
         } else {
@@ -172,6 +172,7 @@ export default createStore({
         const { results } = await (await axios.get(`${apiURL}product`)).data
         if (results) {
           context.commit('setProducts', results)
+          console.log(results)
         } else {
           router.push({ name: 'login' })
         }
