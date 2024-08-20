@@ -16,9 +16,6 @@
           Dive into our collection and relive the magic of the past!
         </p>
       </section>
-      <footer class="about-footer">
-        <p>&copy; 2024 Retro Vision. All rights reserved.</p>
-      </footer>
     </div>
   </div>
 </template>
@@ -30,18 +27,21 @@
   align-items: center;
   min-height: 100vh;
   width: 100%; /* Adjusted width to center content properly */
-  background-color: #fffcec; /* Light retro color */
+  background: url('https://jefthanizaam01.github.io/favoriteimages/images/arcade.jpg') no-repeat center center; /* Add background image */
+  background-size: cover; /* Ensure image covers the entire area */
+  background-color: #fffcec; /* Light retro color as fallback */
 }
 
 .about-content {
   text-align: center;
-  padding: 20px;
-  border: 2px solid #e0b1ff; /* Retro border color */
+  padding: 10px;
+   /* Retro border color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
   border-radius: 10px; /* Rounded corners for a retro look */
-  background-color: #ffffff; /* White background for contrast */
+ /* White background for contrast */
   position: relative;
-  width: 80%; /* Adjust width to better center the content */
+  top: -40px;
+  width: 60%; /* Adjust width to better center the content */
 }
 
 .about-header {
@@ -49,7 +49,8 @@
 }
 
 .about-header h1 {
-  font-size: 2.5em;
+  font-size: 5.5em;
+  font-family: 'VT323', monospace;
   margin: 0;
   color: #ff0000; /* Red color for the heading */
   text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.8); /* Red glowing effect */
@@ -58,10 +59,10 @@
 
 .retro-text {
   font-family: 'Press Start 2P', cursive; /* Retro font */
-  font-size: 1.2em;
+  font-size: 1.4em;
   line-height: 1.6;
-  color: #333; /* Dark color for text */
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+  color: white; /* Dark color for text */
+  text-shadow: 0 0 4px red, 0 0 5px red; /* Subtle shadow for depth */
   margin-bottom: 15px;
 }
 
