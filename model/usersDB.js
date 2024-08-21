@@ -7,10 +7,10 @@ const getUsersDB = async () => {
     return data 
 }
 
-const getUserDB = async (profile) => {
-    let [[data]] = await pool.query('SELECT * FROM users WHERE userProfile = ?', [profile])
-    return data
-}
+const getUserDB = async (email) => {
+    let [[data]] = await pool.query('SELECT * FROM users WHERE emailAdd = ?', [email]);
+    return data;
+};
 
 const insertUserDB = async (name, surname, age, gender, role, email, password, profile) => {
     let [data] = await pool.query(`
@@ -18,14 +18,14 @@ const insertUserDB = async (name, surname, age, gender, role, email, password, p
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `, [name, surname, age, gender, role, email, password, profile])
         return data
-}
+};
 
 const deleteUserDB = async (id) => {
     await pool.query("DELETE FROM users WHERE userID = ?", [id])
-}
+};
 
 const updateUserDB = async (id, name, surname, age, gender, role, email, password, profile) => {
     await pool.query("UPDATE users SET firstName = ?, lastName = ?, userAge = ?,  Gender = ?, userRole = ?, emailAdd = ?, userPass = ?, userProfile = ? WHERE userID = ?", [name, surname, age, gender, role, email, password, profile, id])
-}
+};
 
 export {getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB}
