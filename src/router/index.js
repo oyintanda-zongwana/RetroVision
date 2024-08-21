@@ -30,11 +30,6 @@ const routes = [
     path: '/reachUs',
     name: 'reachUs',
     component: () => import('@/views/ReachUs.vue')
-  },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('@/views/SignUp.vue')
   }
 
 ]
