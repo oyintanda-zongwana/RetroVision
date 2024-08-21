@@ -26,11 +26,6 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/reachUs">Reach us</router-link>
                     </li>
-                    <ul class="userAccount navbar-nav">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/signup">Register</router-link>
-                        </li>
-                    </ul>
                 </ul>
             </div>
         </div>
