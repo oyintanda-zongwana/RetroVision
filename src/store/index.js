@@ -6,7 +6,7 @@ import router from '@/router'
 import { applyToken } from '@/service/AuthenticatedUser.js'
 import { useCookies } from 'vue3-cookies'
 const { cookies } = useCookies()
-const apiURL = 'https://symphonybackup.onrender.com/'
+const apiURL = 'https://backend-hher.onrender.com/'
 // Should you reload the page after logging in
 applyToken(cookies.get('LegitUser')?.token)
 export default createStore({
