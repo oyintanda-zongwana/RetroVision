@@ -14,7 +14,7 @@
                     <p class="lead"><span class="text-success fw-bold">Amount</span>: R{{ product.amount }}</p>
                     <div class="button-wrapper d-md-flex d-block justify-content-between">
                         <router-link :to="{ name: 'product', params: { id: product.productID } }">
-                            <button class="btn btn-success">View</button>
+                            <button class="btn btn-primary">View</button>
                         </router-link>
                         <button class="btn btn-dark">Cart</button>
                     </div>
