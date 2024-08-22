@@ -1,4 +1,4 @@
-import { getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB } from '../model/usersDB.js';
+import { getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB, getUserIdDB } from '../model/usersDB.js';
 import { hash } from 'bcrypt';
 
 let getUsers = async (req, res) => {
@@ -10,9 +10,22 @@ let getUsers = async (req, res) => {
     }
 }
 
+let getUserId = async (req, res) => {
+    try {
+        let user = await getUserIdDB(req.params.id);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        res.status(500).send('Error retrieving user');
+    }
+}
+
 let getUser = async (req, res) => {
     try {
-        let user = await getUserDB(req.params.id);
+        let user = await getUserIdDB(req.params.id);
         if (user) {
             res.json(user);
         } else {
@@ -84,4 +97,4 @@ const loginUser = (req, res) => {
     }
 };
 
-export { getUsers, getUser, insertUser, deleteUser, updateUser, loginUser };
+export { getUsers, getUser, insertUser, deleteUser, updateUser, loginUser, getUserId};

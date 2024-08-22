@@ -12,6 +12,11 @@ const getUserDB = async (email) => {
     return data;
 };
 
+const getUserIdDB = async (id) => {
+    let [[data]] = await pool.query('SELECT * FROM users WHERE userID = ?', [id]);
+    return data;
+};
+
 const insertUserDB = async (name, surname, age, gender, role, email, password, profile) => {
     let [data] = await pool.query(`
         INSERT INTO users (firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile)
@@ -28,4 +33,4 @@ const updateUserDB = async (id, name, surname, age, gender, role, email, passwor
     await pool.query("UPDATE users SET firstName = ?, lastName = ?, userAge = ?,  Gender = ?, userRole = ?, emailAdd = ?, userPass = ?, userProfile = ? WHERE userID = ?", [name, surname, age, gender, role, email, password, profile, id])
 };
 
-export {getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB}
+export {getUsersDB, getUserDB, insertUserDB, deleteUserDB, updateUserDB, getUserIdDB}
