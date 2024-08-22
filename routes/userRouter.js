@@ -12,5 +12,5 @@ userRouter.post('/register', insertUser)
 
 userRouter.patch('/update/:id', updateUser)
 userRouter.delete('/delete/:id', deleteUser)
-        
+
 export default userRouter
