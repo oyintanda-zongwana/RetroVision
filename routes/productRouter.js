@@ -4,14 +4,11 @@ import {getProducts, getProduct, insertProduct, deleteProduct, updateProduct} fr
 const productRouter = express.Router()
 
 productRouter.get('/', getProducts)
+productRouter.get('/:id', getProduct)
 
 productRouter.post('/insert', insertProduct)
 
-productRouter
-        .route('/:id')
-            .get(getProduct)
-            .delete(deleteProduct)
-            .patch(updateProduct)
-
+productRouter.patch('/update/:id', updateProduct)
+productRouter.delete('/delete/:id', deleteProduct)
 
 export default productRouter

@@ -54,4 +54,4 @@ let updateProduct = async (req, res) => {
     }
 }
 
-export { getProducts, getProduct, insertProduct, deleteProduct, updateProduct };
+export { getProducts, getProduct, insertProduct, deleteProduct, updateProduct};
