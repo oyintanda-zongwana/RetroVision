@@ -26,22 +26,22 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100%; /* Adjusted width to center content properly */
-  background: url('https://jefthanizaam01.github.io/favoriteimages/images/arcade.jpg') no-repeat center center; /* Add background image */
-  background-size: cover; /* Ensure image covers the entire area */
-  background-color: #fffcec; /* Light retro color as fallback */
+  width: 100%; 
+  background: url('https://jefthanizaam01.github.io/favoriteimages/images/arcade.jpg') no-repeat center center; 
+  background-size: cover; 
+  background-color: #fffcec; 
 }
 
 .about-content {
   text-align: center;
   padding: 10px;
-   /* Retro border color */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-  border-radius: 10px; /* Rounded corners for a retro look */
- /* White background for contrast */
+   
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+  border-radius: 10px; 
+ 
   position: relative;
   top: -40px;
-  width: 60%; /* Adjust width to better center the content */
+  width: 60%; 
 }
 
 .about-header {
@@ -52,17 +52,17 @@
   font-size: 5.5em;
   font-family: 'VT323', monospace;
   margin: 0;
-  color: #ff0000; /* Red color for the heading */
-  text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.8); /* Red glowing effect */
-  animation: flicker 3.5s infinite; /* Retro text animation */
+  color: #ff0000; 
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.8); 
+  animation: flicker 3.5s infinite; 
 }
 
 .retro-text {
-  font-family: 'Press Start 2P', cursive; /* Retro font */
+  font-family: 'Press Start 2P', cursive;
   font-size: 1.4em;
   line-height: 1.6;
-  color: white; /* Dark color for text */
-  text-shadow: 0 0 4px red, 0 0 5px red; /* Subtle shadow for depth */
+  color: white; 
+  text-shadow: 0 0 4px red, 0 0 5px red; 
   margin-bottom: 15px;
 }
 
@@ -72,7 +72,7 @@
 
 .about-footer p {
   font-size: 0.9em;
-  color: #888; /* Footer text color */
+  color: #888; 
 }
 
 @keyframes pulse {
