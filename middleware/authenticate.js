@@ -43,20 +43,4 @@ const checkUser = async (req, res, next) => {
     }
 };
 
-const verifyTheToken = (req, res, next) => {
-    let {cookie} = req.headers;
-    // checks if the token exists first
-    let token = cookie && cookie.split("=")[1];
-    jwk.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-        if (err) {
-            res.json({message: 'token has expired'});
-            return;
-        }
-        req.body.user = decoded.email
-        console.log(req.body.email);
-    })
-    console.log(token);
-    next();
-}
-
-export {checkUser, verifyTheToken}
+export {checkUser}
