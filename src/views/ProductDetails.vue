@@ -1,20 +1,20 @@
 <template>
-    <div class="container">
+    <div class="container-fluid retro-container">
         <div class="row">
-            <h2 class="display-2">Product Details</h2>
+            <h2 class="display-2 retro-heading">Product Details</h2>
         </div>
-        <div class="row justify-content-center" v-if="product">
+        <div class="row justify-content-center my-2" v-if="product">
             <Card>
                 <template #cardHeader>
-                    {{ product.productURL }}
-                    <img :src="product.prodURL" loading="lazy" class="img-fluid" :alt="product.prodName">
+                    <img :src="product.prodURL" loading="lazy" class="img-fluid retro-image" :alt="product.prodName">
                 </template>
                 <template #cardBody>
-                    <h5 class="card-title fw-bold">{{ product.prodName }}</h5>
+                    <h5 class="card-title fw-bold retro-title">{{ product.prodName }}</h5>
                     <p class="lead">
                         {{ product.prodDescription }}
                     </p>
-                    <p class="lead"><span class="text-success fw-bold">Amount</span>: R{{ product.amount }}</p>
+                    <p class="lead"><span class="text-dark fw-bold">Amount</span>: R{{ product.amount }}</p>
+                    <p class="lead"><span class="text-dark fw-bold">Quantity</span>: {{ product.quantity }}</p>
                 </template>
             </Card>
         </div>
@@ -30,14 +30,47 @@ import { computed, onMounted } from 'vue'
 import Card from '@/components/Card.vue'
 import Spinner from '@/components/Spinner.vue'
 import { useRoute } from 'vue-router'
+
 const store = useStore()
 const route = useRoute()
-const product = computed(
-    () => store.state.product
-)
+const product = computed(() => store.state.product)
+
 onMounted(() => {
     store.dispatch('fetchProduct', route.params.id)
-}) 
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+.retro-container {
+    background-color: #001f3f; 
+    color: #ffffff; 
+    min-height: 100vh; 
+    padding: 20px;
+}
+
+.retro-heading {
+    font-size: 5.5em;
+    font-family: 'VT323', monospace;
+    margin: 0;
+    color: #5690ca; 
+    text-shadow: 0 0 5px #001f3f, 0 0 10px #dae4ed; 
+    animation: flicker 3.5s infinite; 
+}
+
+.retro-image {
+    border: 2px solid #0074d9; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.retro-title {
+    color: #0d2d3a; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+</style>
