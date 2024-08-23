@@ -4,11 +4,11 @@ import { hash } from 'bcrypt';
 let getUsers = async (req, res) => {
     try {
         let users = await getUsersDB();
-        res.json(users);  // Now users is an object, so this will return the entire object
+        res.json(users);
     } catch (error) {
         res.status(500).send('Error retrieving users');
     }
-};
+}
 
 let getUserId = async (req, res) => {
     try {
@@ -21,11 +21,11 @@ let getUserId = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error retrieving user');
     }
-};
+}
 
 let getUser = async (req, res) => {
     try {
-        let user = await getUserDB(req.params.email);
+        let user = await getUserIdDB(req.params.id);
         if (user) {
             res.json(user);
         } else {
@@ -34,7 +34,7 @@ let getUser = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error retrieving user');
     }
-};
+}
 
 let insertUser = async (req, res) => {    
     try {
@@ -45,13 +45,13 @@ let insertUser = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error inserting user');
     }
-};   
+}   
 
 let deleteUser = async (req, res) => {
     try {
         let { id } = req.body;
         let result = await deleteUserDB(req.params.id);
-        if (result.affectedRows > 0) {
+        if (result) {
             res.send('User was deleted successfully');
         } else {
             res.status(404).send('User not found');
@@ -59,7 +59,7 @@ let deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error deleting user');
     }
-};
+}
 
 let updateUser = async (req, res) => {
     try {
@@ -84,7 +84,7 @@ let updateUser = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error updating user');
     }
-};
+}
 
 const loginUser = (req, res) => {
     try {
@@ -97,4 +97,4 @@ const loginUser = (req, res) => {
     }
 };
 
-export { getUsers, getUser, insertUser, deleteUser, updateUser, loginUser, getUserId };
+export { getUsers, getUser, insertUser, deleteUser, updateUser, loginUser, getUserId};

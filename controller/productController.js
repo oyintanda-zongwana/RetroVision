@@ -2,8 +2,7 @@ import { getProductsDB, getProductDB, insertProductDB, deleteProductDB, updatePr
 
 let getProducts = async (req, res) => {
     try {
-        let products = await getProductsDB();
-        res.json(products); // Returns the object with all products
+        res.json(await getProductsDB());
     } catch (error) {
         res.status(500).send('Error retrieving products');
     }
@@ -11,12 +10,7 @@ let getProducts = async (req, res) => {
 
 let getProduct = async (req, res) => {
     try {
-        let product = await getProductDB(req.params.id);
-        if (product) {
-            res.json(product); // Returns the single product object
-        } else {
-            res.status(404).send('Product not found');
-        }
+        res.json(await getProductDB(req.params.id));
     } catch (error) {
         res.status(500).send('Error retrieving product');
     }
@@ -35,12 +29,8 @@ let insertProduct = async (req, res) => {
 let deleteProduct = async (req, res) => {
     try {
         let { id } = req.body;
-        let result = await deleteProductDB(req.params.id);
-        if (result.affectedRows > 0) {
-            res.send('Product was deleted successfully');
-        } else {
-            res.status(404).send('Product not found');
-        }
+        await deleteProductDB(req.params.id);
+        res.send('Product was deleted successfully');
     } catch (error) {
         res.status(500).send('Error deleting product');
     }
@@ -50,22 +40,18 @@ let updateProduct = async (req, res) => {
     try {
         let { name, quantity, amount, Category, prodUrl } = req.body;
         
-        let product = await getProductDB(req.params.id);
-        if (product) {
-            name = name || product.prodName;
-            quantity = quantity || product.quantity;
-            amount = amount || product.amount;
-            Category = Category || product.Category;
-            prodUrl = prodUrl || product.prodUrl;
+        let products = await getProductDB(req.params.id);
+        name ? name = name : name = products.prodName;
+        quantity ? quantity = quantity : quantity = products.quantity;
+        amount ? amount = amount : amount = products.amount;
+        Category ? Category = Category : Category = products.Category;
+        prodUrl ? prodUrl = prodUrl : prodUrl = products.prodUrl;
 
-            await updateProductDB(req.params.id, name, quantity, amount, Category, prodUrl);
-            res.send('Data has been updated successfully');
-        } else {
-            res.status(404).send('Product not found');
-        }
+        await updateProductDB(req.params.id, name, quantity, amount, Category, prodUrl);
+        res.send('Data has been updated successfully');
     } catch (error) {
         res.status(500).send('Error updating product');
     }
 }
 
-export { getProducts, getProduct, insertProduct, deleteProduct, updateProduct };
+export { getProducts, getProduct, insertProduct, deleteProduct, updateProduct};
