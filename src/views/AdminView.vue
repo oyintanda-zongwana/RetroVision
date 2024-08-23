@@ -2,8 +2,7 @@
     <div class="admin-page">
       <h1>Products Management</h1>
       <button @click="openAddProductModal">Add Product</button>
-      
-      
+  
       <div class="search-filter">
         <input v-model="searchQuery" placeholder="Search by name" @input="searchProducts">
         <select v-model="selectedCategory" @change="filterProducts">
@@ -17,7 +16,6 @@
         </select>
       </div>
   
-      
       <div v-if="loading" class="loading">Loading...</div>
       <table v-else>
         <thead>
@@ -40,62 +38,44 @@
             <td>{{ product.Category }}</td>
             <td><img :src="product.prodUrl" alt="" width="50"></td>
             <td>
-              <button @click="viewProduct(product)">View</button>
-              <button @click="editProduct(product)">Edit</button>
+              <button @click="editProduct(product)">Update</button>
               <button @click="deleteProduct(product.prodID)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
   
-      
       <AppModal v-if="showAddProductModal || showEditProductModal">
         <template #header>
-          <h2>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h2>
+          <h2>{{ isEditing ? 'Update Product' : 'Add Product' }}</h2>
         </template>
         <template #body>
           <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
-            <div>
+            <div class="form-group">
               <label for="prodName">Name:</label>
               <input type="text" v-model="form.prodName" required>
             </div>
-            <div>
+            <div class="form-group">
               <label for="quantity">Quantity:</label>
               <input type="number" v-model="form.quantity" required>
             </div>
-            <div>
+            <div class="form-group">
               <label for="amount">Amount:</label>
               <input type="text" v-model="form.amount" required>
             </div>
-            <div>
+            <div class="form-group">
               <label for="category">Category:</label>
               <input type="text" v-model="form.Category" required>
             </div>
-            <div>
+            <div class="form-group">
               <label for="prodUrl">Image URL:</label>
               <input type="text" v-model="form.prodUrl" required>
             </div>
-            <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
-            <button type="button" @click="closeModal">Cancel</button>
+            <div class="modal-actions">
+              <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
+              <button type="button" @click="closeModal">Cancel</button>
+            </div>
           </form>
-        </template>
-      </AppModal>
-  
-    
-      <AppModal v-if="showViewProductModal">
-        <template #header>
-          <h2>Product Details</h2>
-        </template>
-        <template #body>
-          <div v-if="selectedProduct">
-            <p>ID: {{ selectedProduct.prodID }}</p>
-            <p>Name: {{ selectedProduct.prodName }}</p>
-            <p>Quantity: {{ selectedProduct.quantity }}</p>
-            <p>Amount: {{ selectedProduct.amount }}</p>
-            <p>Category: {{ selectedProduct.Category }}</p>
-            <p>Image URL: <img :src="selectedProduct.prodUrl" alt="" width="100"></p>
-            <button @click="closeViewProductModal">Close</button>
-          </div>
         </template>
       </AppModal>
     </div>
@@ -123,7 +103,6 @@
         },
         showAddProductModal: false,
         showEditProductModal: false,
-        showViewProductModal: false,
         isEditing: false,
         loading: false,
         searchQuery: '',
@@ -134,6 +113,7 @@
       }
     },
     methods: {
+     
       async fetchProducts() {
         this.loading = true
         try {
@@ -150,6 +130,7 @@
           this.loading = false
         }
       },
+      
       openAddProductModal() {
         this.form = {
           prodID: null,
@@ -162,23 +143,18 @@
         this.showAddProductModal = true
         this.isEditing = false
       },
-      async viewProduct(product) {
-        this.selectedProduct = product
-        this.showViewProductModal = true
-      },
-      closeViewProductModal() {
-        this.showViewProductModal = false
-        this.selectedProduct = null
-      },
+      
       editProduct(product) {
         this.form = { ...product }
         this.showEditProductModal = true
         this.isEditing = true
       },
+      
       closeModal() {
         this.showAddProductModal = false
         this.showEditProductModal = false
       },
+    
       async addProduct() {
         if (!this.isFormValid()) {
           toast.error('Please fill in all fields', {
@@ -203,6 +179,7 @@
           })
         }
       },
+     
       async updateProduct() {
         if (!this.isFormValid()) {
           toast.error('Please fill in all fields', {
@@ -227,6 +204,7 @@
           })
         }
       },
+     
       async deleteProduct(id) {
         try {
           const { msg } = await axios.delete(`https://retrovision-2.onrender.com/product/${id}`)
@@ -242,6 +220,7 @@
           })
         }
       },
+     
       sortProducts(column) {
         if (column === 'amount') {
           this.filteredProducts.sort((a, b) => {
@@ -260,6 +239,7 @@
           })
         }
       },
+    
       filterProducts() {
         this.filteredProducts = this.products.filter(product => {
           return (
@@ -269,13 +249,16 @@
         })
         this.sortProducts('amount') 
       },
+    
       searchProducts() {
         this.filterProducts() 
       },
+    
       isFormValid() {
         return this.form.prodName && this.form.quantity && this.form.amount && this.form.Category && this.form.prodUrl
       }
     },
+   
     mounted() {
       this.fetchProducts()
     }
@@ -286,47 +269,52 @@
   .admin-page {
     padding: 20px;
   }
+  
   table {
     width: 100%;
     border-collapse: collapse;
   }
+  
   table, th, td {
     border: 1px solid #ddd;
   }
+  
   th, td {
     padding: 8px;
     text-align: left;
   }
+  
   th {
     background-color: #f2f2f2;
     cursor: pointer;
   }
+  
   button {
     margin: 5px;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    color: #fff;
-    background-color: #007bff;
-    font-size: 16px;
+    background-color: black;
+    color: white;
     cursor: pointer;
+    font-weight: bold;
     transition: background-color 0.3s ease;
   }
+  
   button:hover {
-    background-color: #0056b3;
+    background-color: grey;
   }
-  .search-filter {
-    margin-bottom: 20px;
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
   }
-  .search-filter input, .search-filter select {
-    margin-right: 10px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
+  
   .loading {
     text-align: center;
-    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
   }
   </style>
   
