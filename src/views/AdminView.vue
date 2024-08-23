@@ -1,320 +1,241 @@
 <template>
-    <div class="admin-page">
-      <h1>Products Management</h1>
-      <button @click="openAddProductModal">Add Product</button>
-  
-      <div class="search-filter">
-        <input v-model="searchQuery" placeholder="Search by name" @input="searchProducts">
-        <select v-model="selectedCategory" @change="filterProducts">
-          <option value="">All Categories</option>
-          <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
-        </select>
-        <select v-model="priceSortOrder" @change="sortProducts('amount')">
-          <option value="">Sort by Price</option>
-          <option value="asc">Lowest to Highest</option>
-          <option value="desc">Highest to Lowest</option>
-        </select>
-      </div>
-  
-      <div v-if="loading" class="loading">Loading...</div>
-      <table v-else>
-        <thead>
-          <tr>
-            <th @click="sortProducts('prodID')">ID</th>
-            <th @click="sortProducts('prodName')">Name</th>
-            <th @click="sortProducts('quantity')">Quantity</th>
-            <th @click="sortProducts('amount')">Amount</th>
-            <th @click="sortProducts('Category')">Category</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in filteredProducts" :key="product.prodID">
-            <td>{{ product.prodID }}</td>
-            <td>{{ product.prodName }}</td>
-            <td>{{ product.quantity }}</td>
-            <td>{{ product.amount }}</td>
-            <td>{{ product.Category }}</td>
-            <td><img :src="product.prodUrl" alt="" width="50"></td>
-            <td>
-              <button @click="editProduct(product)">Update</button>
-              <button @click="deleteProduct(product.prodID)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <AppModal v-if="showAddProductModal || showEditProductModal">
-        <template #header>
-          <h2>{{ isEditing ? 'Update Product' : 'Add Product' }}</h2>
-        </template>
-        <template #body>
-          <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
-            <div class="form-group">
-              <label for="prodName">Name:</label>
-              <input type="text" v-model="form.prodName" required>
-            </div>
-            <div class="form-group">
-              <label for="quantity">Quantity:</label>
-              <input type="number" v-model="form.quantity" required>
-            </div>
-            <div class="form-group">
-              <label for="amount">Amount:</label>
-              <input type="text" v-model="form.amount" required>
-            </div>
-            <div class="form-group">
-              <label for="category">Category:</label>
-              <input type="text" v-model="form.Category" required>
-            </div>
-            <div class="form-group">
-              <label for="prodUrl">Image URL:</label>
-              <input type="text" v-model="form.prodUrl" required>
-            </div>
-            <div class="modal-actions">
-              <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
-              <button type="button" @click="closeModal">Cancel</button>
-            </div>
-          </form>
-        </template>
-      </AppModal>
+  <div class="admin-page">
+    <h1>Admin</h1>
+    <button @click="openAddProductModal">Add Product</button>
+
+    <div class="search-filter">
+      <input v-model="searchQuery" placeholder="Search by name" />
+      <select v-model="selectedCategory">
+        <option value="">All Categories</option>
+        <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+      </select>
+      <select v-model="priceSortOrder">
+        <option value="">Sort by Price</option>
+        <option value="asc">Lowest to Highest</option>
+        <option value="desc">Highest to Lowest</option>
+      </select>
     </div>
-  </template>
-  
-  <script>
-  import axios from 'axios'
-  import { toast } from 'vue3-toastify'
-  import 'vue3-toastify/dist/index.css'
-  import AppModal from '@/components/AppModal.vue'
-  
-  export default {
-    components: { AppModal },
-    data() {
-      return {
-        products: [],
-        filteredProducts: [],
-        form: {
-          prodID: null,
-          prodName: '',
-          quantity: '',
-          amount: '',
-          Category: '',
-          prodUrl: ''
-        },
-        showAddProductModal: false,
-        showEditProductModal: false,
-        isEditing: false,
-        loading: false,
-        searchQuery: '',
-        selectedCategory: '',
-        priceSortOrder: '',
-        categories: [],
-        selectedProduct: null
-      }
-    },
-    methods: {
-     
-      async fetchProducts() {
-        this.loading = true
-        try {
-          const response = await axios.get('https://retrovision-2.onrender.com/products')
-          this.products = response.data.results
-          this.filteredProducts = this.products
-          this.categories = [...new Set(this.products.map(p => p.Category))]
-        } catch (e) {
-          toast.error(`Failed to fetch products: ${e.message}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-        } finally {
-          this.loading = false
-        }
+
+    <div v-if="loading" class="loading">Loading...</div>
+    <table v-else>
+      <thead>
+        <tr>
+          <th @click="sortBy('prodID')">ID</th>
+          <th @click="sortBy('prodName')">Name</th>
+          <th @click="sortBy('quantity')">Quantity</th>
+          <th @click="sortBy('amount')">Amount</th>
+          <th @click="sortBy('Category')">Category</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in sortedFilteredProducts" :key="product.prodID">
+          <td>{{ product.prodID }}</td>
+          <td>{{ product.prodName }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.amount }}</td>
+          <td>{{ product.Category }}</td>
+          <td><img :src="product.prodUrl" alt="" width="50"></td>
+          <td>
+            <button @click="editProduct(product)">Update</button>
+            <button @click="handleDeleteProduct(product.prodID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <AppModal v-if="showAddProductModal || showEditProductModal">
+      <template #header>
+        <h2>{{ isEditing ? 'Update Product' : 'Add Product' }}</h2>
+      </template>
+      <template #body>
+        <form @submit.prevent="isEditing ? handleUpdateProduct() : handleAddProduct()">
+          <div class="form-group">
+            <label for="prodName">Name:</label>
+            <input type="text" v-model="form.prodName" required>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" v-model="form.quantity" required>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="text" v-model="form.amount" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Category:</label>
+            <input type="text" v-model="form.Category" required>
+          </div>
+          <div class="form-group">
+            <label for="prodUrl">Image URL:</label>
+            <input type="text" v-model="form.prodUrl" required>
+          </div>
+          <div class="modal-actions">
+            <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
+            <button type="button" @click="closeModal">Cancel</button>
+          </div>
+        </form>
+      </template>
+    </AppModal>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+import AppModal from '@/components/AppModal.vue'
+
+export default {
+  components: { AppModal },
+  data() {
+    return {
+      form: {
+        prodID: null,
+        prodName: '',
+        quantity: '',
+        amount: '',
+        Category: '',
+        prodUrl: ''
       },
-      
-      openAddProductModal() {
-        this.form = {
-          prodID: null,
-          prodName: '',
-          quantity: '',
-          amount: '',
-          Category: '',
-          prodUrl: ''
-        }
-        this.showAddProductModal = true
-        this.isEditing = false
-      },
-      
-      editProduct(product) {
-        this.form = { ...product }
-        this.showEditProductModal = true
-        this.isEditing = true
-      },
-      
-      closeModal() {
-        this.showAddProductModal = false
-        this.showEditProductModal = false
-      },
-    
-      async addProduct() {
-        if (!this.isFormValid()) {
-          toast.error('Please fill in all fields', {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          return
-        }
-  
-        try {
-          const { msg } = await axios.post('https://retrovision-2.onrender.com/product/add', this.form)
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          this.fetchProducts()
-          this.closeModal()
-        } catch (e) {
-          toast.error(`Failed to add product: ${e.message}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-        }
-      },
-     
-      async updateProduct() {
-        if (!this.isFormValid()) {
-          toast.error('Please fill in all fields', {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          return
-        }
-  
-        try {
-          const { msg } = await axios.patch(`https://retrovision-2.onrender.com/product/${this.form.prodID}`, this.form)
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          this.fetchProducts()
-          this.closeModal()
-        } catch (e) {
-          toast.error(`Failed to update product: ${e.message}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-        }
-      },
-     
-      async deleteProduct(id) {
-        try {
-          const { msg } = await axios.delete(`https://retrovision-2.onrender.com/product/${id}`)
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-          this.fetchProducts()
-        } catch (e) {
-          toast.error(`Failed to delete product: ${e.message}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          })
-        }
-      },
-     
-      sortProducts(column) {
-        if (column === 'amount') {
-          this.filteredProducts.sort((a, b) => {
-            if (this.priceSortOrder === 'asc') {
-              return parseFloat(a[column]) - parseFloat(b[column])
-            } else if (this.priceSortOrder === 'desc') {
-              return parseFloat(b[column]) - parseFloat(a[column])
-            }
-            return 0
-          })
-        } else {
-          this.filteredProducts.sort((a, b) => {
-            if (a[column] < b[column]) return -1
-            if (a[column] > b[column]) return 1
-            return 0
-          })
-        }
-      },
-    
-      filterProducts() {
-        this.filteredProducts = this.products.filter(product => {
-          return (
-            (this.selectedCategory === '' || product.Category === this.selectedCategory) &&
-            product.prodName.toLowerCase().includes(this.searchQuery.toLowerCase())
-          )
-        })
-        this.sortProducts('amount') 
-      },
-    
-      searchProducts() {
-        this.filterProducts() 
-      },
-    
-      isFormValid() {
-        return this.form.prodName && this.form.quantity && this.form.amount && this.form.Category && this.form.prodUrl
-      }
-    },
-   
-    mounted() {
-      this.fetchProducts()
+      showAddProductModal: false,
+      showEditProductModal: false,
+      isEditing: false,
+      searchQuery: '',
+      selectedCategory: '',
+      priceSortOrder: ''
     }
+  },
+  computed: {
+    ...mapState(['products', 'loading', 'categories']),
+    sortedFilteredProducts() {
+      let filtered = this.products.filter(product => {
+        return (
+          (this.selectedCategory === '' || product.Category === this.selectedCategory) &&
+          product.prodName.toLowerCase().includes(this.searchQuery.toLowerCase())
+        )
+      })
+
+      if (this.priceSortOrder) {
+        filtered.sort((a, b) => {
+          const aPrice = parseFloat(a.amount)
+          const bPrice = parseFloat(b.amount)
+          return this.priceSortOrder === 'asc' ? aPrice - bPrice : bPrice - aPrice
+        })
+      } else {
+        filtered.sort((a, b) => {
+          if (a.prodName < b.prodName) return -1
+          if (a.prodName > b.prodName) return 1
+          return 0
+        })
+      }
+
+      return filtered
+    }
+  },
+  methods: {
+    ...mapActions(['fetchProducts', 'addProduct', 'updateProduct', 'deleteProduct']),
+    openAddProductModal() {
+      this.form = {
+        prodID: null,
+        prodName: '',
+        quantity: '',
+        amount: '',
+        Category: '',
+        prodUrl: ''
+      }
+      this.showAddProductModal = true
+      this.isEditing = false
+    },
+    editProduct(product) {
+      this.form = { ...product }
+      this.showEditProductModal = true
+      this.isEditing = true
+    },
+    closeModal() {
+      this.showAddProductModal = false
+      this.showEditProductModal = false
+    },
+    async handleAddProduct() {
+      if (this.isFormValid()) {
+        await this.addProduct(this.form)
+        this.closeModal()
+      }
+    },
+    async handleUpdateProduct() {
+      if (this.isFormValid()) {
+        await this.updateProduct(this.form)
+        this.closeModal()
+      }
+    },
+    async handleDeleteProduct(id) {
+      if (confirm('Are you sure you want to delete this product?')) {
+        await this.deleteProduct(id)
+      }
+    },
+    isFormValid() {
+      return this.form.prodName && this.form.quantity && this.form.amount && this.form.Category && this.form.prodUrl
+    }
+  },
+  mounted() {
+    this.fetchProducts()
   }
-  </script>
-  
-  <style scoped>
-  .admin-page {
-    padding: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid #ddd;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-    cursor: pointer;
-  }
-  
-  button {
-    margin: 5px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: grey;
-  }
-  
-  .modal-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .loading {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  </style>
-  
+}
+</script>
+
+<style scoped>
+.admin-page {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: grey;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+</style>
