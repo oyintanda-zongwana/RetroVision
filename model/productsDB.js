@@ -4,10 +4,11 @@ config();
 
 const getProductsDB = async () => {
     let [rows] = await pool.query('SELECT * FROM products');
-    let data = rows.reduce((acc, product) => {
-        acc[product.prodID] = product;
-        return acc;
-    }, {});
+    
+    // Wrap the array of products in an object with a "results" key
+    let data = {
+        results: rows
+    };
     
     return data;
 };

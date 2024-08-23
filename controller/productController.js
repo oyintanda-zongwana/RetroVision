@@ -2,25 +2,25 @@ import { getProductsDB, getProductDB, insertProductDB, deleteProductDB, updatePr
 
 let getProducts = async (req, res) => {
     try {
-        let products = await getProductsDB();
-        res.json(products); // Returns the object with all products
+        let productsData = await getProductsDB();
+        res.json(productsData); // Now productsData is an object with a 'results' array
     } catch (error) {
         res.status(500).send('Error retrieving products');
     }
-}
+};
 
 let getProduct = async (req, res) => {
     try {
         let product = await getProductDB(req.params.id);
         if (product) {
-            res.json(product); // Returns the single product object
+            res.json(product); // No change here, as this still returns a single product object
         } else {
             res.status(404).send('Product not found');
         }
     } catch (error) {
         res.status(500).send('Error retrieving product');
     }
-}
+};
 
 let insertProduct = async (req, res) => {    
     try {
@@ -30,11 +30,10 @@ let insertProduct = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error inserting product');
     }
-}   
+};   
 
 let deleteProduct = async (req, res) => {
     try {
-        let { id } = req.body;
         let result = await deleteProductDB(req.params.id);
         if (result.affectedRows > 0) {
             res.send('Product was deleted successfully');
@@ -44,7 +43,7 @@ let deleteProduct = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error deleting product');
     }
-}
+};
 
 let updateProduct = async (req, res) => {
     try {
@@ -66,6 +65,6 @@ let updateProduct = async (req, res) => {
     } catch (error) {
         res.status(500).send('Error updating product');
     }
-}
+};
 
 export { getProducts, getProduct, insertProduct, deleteProduct, updateProduct };

@@ -3,8 +3,8 @@ import { hash } from 'bcrypt';
 
 let getUsers = async (req, res) => {
     try {
-        let users = await getUsersDB();
-        res.json(users);  // Now users is an object, so this will return the entire object
+        let usersData = await getUsersDB();
+        res.json(usersData); // Now usersData is an object with a 'results' array
     } catch (error) {
         res.status(500).send('Error retrieving users');
     }
@@ -14,7 +14,7 @@ let getUserId = async (req, res) => {
     try {
         let user = await getUserIdDB(req.params.id);
         if (user) {
-            res.json(user);
+            res.json(user); // No change here, as this still returns a single user object
         } else {
             res.status(404).send('User not found');
         }
@@ -27,7 +27,7 @@ let getUser = async (req, res) => {
     try {
         let user = await getUserDB(req.params.email);
         if (user) {
-            res.json(user);
+            res.json(user); // No change here, as this still returns a single user object
         } else {
             res.status(404).send('User not found');
         }
@@ -49,7 +49,6 @@ let insertUser = async (req, res) => {
 
 let deleteUser = async (req, res) => {
     try {
-        let { id } = req.body;
         let result = await deleteUserDB(req.params.id);
         if (result.affectedRows > 0) {
             res.send('User was deleted successfully');
@@ -65,7 +64,7 @@ let updateUser = async (req, res) => {
     try {
         let { name, surname, age, gender, role, email, password, profile } = req.body;
         
-        let user = await getUserDB(req.params.id);
+        let user = await getUserIdDB(req.params.id); // Ensure this is using `getUserIdDB` as it should match the ID
         if (user) {
             name = name || user.firstName;
             surname = surname || user.lastName;

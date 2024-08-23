@@ -5,11 +5,10 @@ config();
 const getUsersDB = async () => {
     let [rows] = await pool.query('SELECT * FROM users');
     
-    // Convert the array of users into an object where the keys are user IDs
-    let data = rows.reduce((acc, user) => {
-        acc[user.userID] = user;
-        return acc;
-    }, {});
+    // Wrap the array of users in an object with a "results" key
+    let data = {
+        results: rows
+    };
     
     return data;
 };
