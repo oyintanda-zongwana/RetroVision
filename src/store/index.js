@@ -3,12 +3,12 @@ import axios from 'axios'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import router from '@/router'
-import { applyToken } from '@/service/AuthenticatedUser.js'
-import { useCookies } from 'vue3-cookies'
-const { cookies } = useCookies()
-const apiURL = 'https://backend-hher.onrender.com/'
+// import { applyToken } from '@/service/AuthenticatedUser.js'
+// import { useCookies } from 'vue3-cookies'
+// const { cookies } = useCookies()
+const apiURL = 'https://retrovision-2.onrender.com/'
 // Should you reload the page after logging in
-applyToken(cookies.get('LegitUser')?.token)
+// applyToken(cookies.get('LegitUser')?.token)
 export default createStore({
   state: {
     users: null,
@@ -41,7 +41,8 @@ export default createStore({
     // ==== User ========
     async fetchUsers(context) {
       try {
-        const { results, msg } = await (await axios.get(`${apiURL}user`)).data
+        const response = await axios.get(`${apiURL}users`)
+        const { results, msg } = response.data
         if (results) {
           context.commit('setUsers', results)
         } else {
@@ -138,10 +139,12 @@ export default createStore({
     // ==== Product =====
     async fetchProducts(context) {
       try {
-        const { results } = await (await axios.get(`${apiURL}product`)).data
+        const response = await axios.get(`${apiURL}products`)
+        const {results} = response.data
         if (results) {
           context.commit('setProducts', results)
-        } else {
+        } 
+        else {
           router.push({ name: 'login' })
         }
       } catch (e) {
@@ -172,7 +175,9 @@ export default createStore({
     },
     async fetchProduct(context, id) {
       try {
-        const { result, msg } = await (await axios.get(`${apiURL}product/${id}`)).data
+        // Correct endpoint URL
+        const response = await axios.get(`${apiURL}products/${id}`)
+        const { result, msg } = response.data
         if (result) {
           context.commit('setProduct', result)
         } else {

@@ -6,14 +6,14 @@
       <div class="row gap-2 justify-content-center my-2" v-if="products">
         <Card v-for="product in products" :key="product.productID">
           <template #cardHeader>
-            <img :src="product.prodURL" loading="lazy" class="img-fluid retro-image" :alt="product.prodName">
+            <img :src="product.prodUrl" loading="lazy" class="img-fluid retro-image" :alt="product.prodUrl">
           </template>
           <template #cardBody>
             <h5 class="card-title fw-bold retro-title">{{ product.prodName }}</h5>
             <p class="lead"><span class="text-dark fw-bold">Amount</span>: R{{ product.amount }}</p>
             <p class="lead"><span class="text-dark fw-bold">Quantity</span>: {{ product.quantity }}</p>
             <div class="button-wrapper d-md-flex d-block justify-content-between">
-              <router-link :to="{ name: 'product', params: { id: product.productID } }">
+              <router-link :to="{ name: 'product', params: { id: product.prodID } }">
                 <button class="btn retro-view-btn">View</button>
               </router-link>
               <button class="btn retro-cart-btn">Cart</button>
