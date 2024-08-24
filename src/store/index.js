@@ -162,17 +162,17 @@ export default createStore({
     async fetchProduct({ commit }, id) {
       try {
         const response = await axios.get(`${apiURL}Products/${id}`);
-        const { result, msg } = response.data;
-        if (result) {
-          commit('setProduct', result);
+        const product = response.data;  // Directly use the response data
+        if (product) {
+          commit('setProduct', product);
         } else {
-          toast.error(`${msg}`, {
+          toast.error('Product not found', {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });
         }
       } catch (e) {
-        toast.error(`${e.message}`, {
+        toast.error(`Failed to fetch product: ${e.message}`, {
           autoClose: 2000,
           position: toast.POSITION.BOTTOM_CENTER
         });

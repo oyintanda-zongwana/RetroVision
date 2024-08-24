@@ -8,7 +8,7 @@
         <slot name="body"></slot>
       </main>
       <footer>
-        <button @click="close">Close</button>
+        <button class="hidden-button" @click="close">Close</button>
       </footer>
     </div>
   </div>
@@ -45,5 +45,8 @@ export default {
 }
 header, footer {
   padding: 10px;
+}
+.hidden-button {
+  display: none;
 }
 </style>
