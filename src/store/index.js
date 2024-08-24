@@ -8,8 +8,8 @@ const apiURL = 'https://retrovision-2.onrender.com/';
 
 export default createStore({
   state: {
-    users: null,
-    user: null,
+    users: [],
+    user: [],
     products: [],
     recentProducts: null,
     product: null,
@@ -40,7 +40,7 @@ export default createStore({
     }
   },
   actions: {
-    // User Actions
+    
     async fetchUsers({ commit }) {
       try {
         const response = await axios.get(`${apiURL}users`);
@@ -101,22 +101,12 @@ export default createStore({
         });
       }
     },
-    async updateUser({ dispatch }, payload) {
+    async updateUser({ dispatch }, userDetails) {
       try {
-        const { msg, err } = await (await axios.patch(`${apiURL}users/update/${payload.userID}`, payload)).data;
-        if (msg) {
-          dispatch('fetchUsers');
-        } else {
-          toast.error(`${err}`, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER
-          });
-        }
+        await axios.patch(`${apiURL}users/update/${userDetails.userID}`, userDetails);
+        dispatch('fetchUsers');
       } catch (e) {
-        toast.error(`${e.message}`, {
-          autoClose: 2000,
-          position: toast.POSITION.BOTTOM_CENTER
-        });
+        console.error(`Error updating user: ${e.message}`);
       }
     },
     async deleteUser({ dispatch }, id) {
@@ -138,7 +128,7 @@ export default createStore({
       }
     },
 
-    // Product Actions
+   
     async fetchProducts({ commit }) {
       commit('setLoading', true);
       try {
@@ -162,7 +152,7 @@ export default createStore({
     async fetchProduct({ commit }, id) {
       try {
         const response = await axios.get(`${apiURL}Products/${id}`);
-        const product = response.data;  // Directly use the response data
+        const product = response.data;  
         if (product) {
           commit('setProduct', product);
         } else {
@@ -216,14 +206,14 @@ export default createStore({
       try {
         const response = await axios.delete(`${apiURL}Products/delete/${id}`);
         if (response.status === 204) {
-          // Successful deletion
+       
           dispatch('fetchProducts');
           toast.success('Product deleted successfully', {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });
         } else {
-          // Handle unexpected response
+        
           toast.error('Unexpected response from server', {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
